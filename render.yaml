@@ -4,24 +4,19 @@ services:
     runtime: python
     plan: free
 
-    buildCommand: bash build.sh
+    buildCommand: ./build.sh
 
     startCommand: gunicorn Ecommerce.wsgi:application
 
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.14.3
-
-      - key: DEBUG
-        value: False
+      - key: DATABASE_URL
+        sync: false
 
       - key: SECRET_KEY
         generateValue: true
 
-      - key: DATABASE_URL
-        fromDatabase:
-          name: django-ecommerce-db
-          property: connectionString
+      - key: DEBUG
+        value: "False"
 
       - key: CLOUDINARY_CLOUD_NAME
         sync: false
@@ -31,8 +26,3 @@ services:
 
       - key: CLOUDINARY_API_SECRET
         sync: false
-
-
-databases:
-  - name: django-ecommerce-db
-    plan: free
