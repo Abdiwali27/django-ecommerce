@@ -1,0 +1,155 @@
+{% extends "store/dashboard_base.html" %}
+
+
+{% block title %}
+    Edit Payment Settings
+{% endblock %}
+
+
+{% block dashboard_content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <!-- HEADER -->
+
+            <div class="mb-4">
+
+                <h1 class="fw-bold mb-1">
+                    Edit Payment Settings
+                </h1>
+
+                <p class="text-muted">
+                    Update your mobile money business numbers.
+                </p>
+
+            </div>
+
+
+            <!-- FORM CARD -->
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+
+                        <!-- ZAAD -->
+
+                        <div class="mb-4">
+
+                            <label
+                                for="zaad_number"
+                                class="form-label fw-semibold"
+                            >
+                                Zaad Business Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="zaad_number"
+                                name="zaad_number"
+                                value="{{ settings.zaad_number }}"
+                                class="form-control"
+                                placeholder="Enter Zaad business number"
+                                maxlength="30"
+                            >
+
+                            <small class="text-muted">
+                                Customer-ku number-kan ayuu
+                                lacagta ugu dirayaa.
+                            </small>
+
+                        </div>
+
+
+                        <!-- E-DAHAB -->
+
+                        <div class="mb-4">
+
+                            <label
+                                for="edahab_number"
+                                class="form-label fw-semibold"
+                            >
+                                E-Dahab Business Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="edahab_number"
+                                name="edahab_number"
+                                value="{{ settings.edahab_number }}"
+                                class="form-control"
+                                placeholder="Enter E-Dahab business number"
+                                maxlength="30"
+                            >
+
+                        </div>
+
+
+                        <!-- SAHAL -->
+
+                        <div class="mb-4">
+
+                            <label
+                                for="sahal_number"
+                                class="form-label fw-semibold"
+                            >
+                                Sahal Business Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="sahal_number"
+                                name="sahal_number"
+                                value="{{ settings.sahal_number }}"
+                                class="form-control"
+                                placeholder="Enter Sahal business number"
+                                maxlength="30"
+                            >
+
+                        </div>
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="d-flex gap-2">
+
+                            <a
+                                href="{% url 'payment_settings' %}"
+                                class="btn btn-outline-secondary"
+                            >
+                                <i class="bi bi-arrow-left me-1"></i>
+                                Cancel
+                            </a>
+
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+                                <i class="bi bi-check-circle me-1"></i>
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

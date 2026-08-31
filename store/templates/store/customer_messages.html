@@ -1,0 +1,221 @@
+{% extends "store/dashboard_base.html" %}
+
+
+{% block title %}
+Customer Messages - My Store
+{% endblock %}
+
+
+{% block page_heading %}
+
+Customer Messages
+
+{% endblock %}
+
+
+{% block dashboard_content %}
+
+<div class="container-fluid " style="margin-top: 75px;">
+
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Customer Messages
+            </h2>
+
+            <p class="text-muted mb-0">
+                Messages sent by your customers.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body p-0">
+
+            {% if contact_messages %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle mb-0">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>
+                                    Customer
+                                </th>
+
+                                <th>
+                                    Email
+                                </th>
+
+                                <th>
+                                    Subject
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for contact_message in contact_messages %}
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="d-flex align-items-center gap-2">
+
+                                            <div
+                                                class="bg-primary bg-opacity-10
+                                                       text-primary
+                                                       rounded-circle
+                                                       d-flex
+                                                       align-items-center
+                                                       justify-content-center"
+                                                style="
+                                                    width:40px;
+                                                    height:40px;
+                                                "
+                                            >
+
+                                                <i class="bi bi-person"></i>
+
+                                            </div>
+
+
+                                            <strong>
+                                                {{ contact_message.name }}
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {{ contact_message.email }}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {{ contact_message.subject }}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {% if contact_message.status == "new" %}
+
+                                            <span class="badge bg-danger">
+                                                New
+                                            </span>
+
+                                        {% elif contact_message.status == "read" %}
+
+                                            <span class="badge bg-warning text-dark">
+                                                Read
+                                            </span>
+
+                                        {% elif contact_message.status == "replied" %}
+
+                                            <span class="badge bg-success">
+                                                Replied
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {{ contact_message.created_at|date:"M d, Y H:i" }}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <a
+                                            href="{% url 'customer_message_detail' contact_message.pk %}"
+                                            class="btn btn-sm btn-primary"
+                                        >
+
+                                            <i class="bi bi-eye me-1"></i>
+
+                                             
+
+                                        </a>
+                                        <a
+    href="{% url 'customer_message_delete' contact_message.pk %}"
+    class="btn btn-danger"
+>
+    <i class="bi bi-trash3 me-1"></i>
+   
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="text-center py-5">
+
+                    <i
+                        class="bi bi-chat-square-text text-muted"
+                        style="font-size:60px;"
+                    ></i>
+
+                    <h4 class="fw-bold mt-3">
+                        No Customer Messages
+                    </h4>
+
+                    <p class="text-muted">
+                        Customer messages will appear here.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

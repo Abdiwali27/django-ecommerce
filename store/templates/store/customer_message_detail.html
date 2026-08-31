@@ -1,0 +1,325 @@
+{% extends "store/dashboard_base.html" %}
+
+
+
+{% block title %}
+Customer Message - My Store
+{% endblock %}
+
+
+{% block page_heading %}
+
+Customer Message
+
+{% endblock %}
+
+
+{% block dashboard_content %}
+
+<div class="container-fluid" style="margin-top: 75px;">
+
+
+    <!-- BACK -->
+
+    <div class="mb-4">
+
+        <a
+            href="{% url 'customer_messages' %}"
+            class="btn btn-outline-secondary"
+        >
+
+            <i class="bi bi-arrow-left me-2"></i>
+
+            Back to Messages
+
+        </a>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+        <!-- CUSTOMER MESSAGE -->
+
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+
+                    <div
+                        class="d-flex
+                               justify-content-between
+                               align-items-start
+                               mb-4"
+                    >
+
+                        <div>
+
+                            <span class="text-primary fw-semibold">
+                                CUSTOMER MESSAGE
+                            </span>
+
+                            <h3 class="fw-bold mt-2 mb-1">
+
+                                {{ contact_message.subject }}
+
+                            </h3>
+
+                            <small class="text-muted">
+
+                                {{ contact_message.created_at|date:"F d, Y - H:i" }}
+
+                            </small>
+
+                        </div>
+
+
+                        <div>
+
+                            {% if contact_message.status == "new" %}
+
+                                <span class="badge bg-danger">
+                                    New
+                                </span>
+
+                            {% elif contact_message.status == "read" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Read
+                                </span>
+
+                            {% elif contact_message.status == "replied" %}
+
+                                <span class="badge bg-success">
+                                    Replied
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CUSTOMER INFO -->
+
+                    <div class="bg-light rounded-3 p-3 mb-4">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <small class="text-muted">
+                                    Customer
+                                </small>
+
+                                <div class="fw-semibold">
+
+                                    {{ contact_message.name }}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <small class="text-muted">
+                                    Email
+                                </small>
+
+                                <div class="fw-semibold">
+
+                                    {{ contact_message.email }}
+
+                                </div>
+
+                            </div>
+
+
+                            {% if contact_message.phone %}
+
+                                <div class="col-md-6">
+
+                                    <small class="text-muted">
+                                        Phone
+                                    </small>
+
+                                    <div class="fw-semibold">
+
+                                        {{ contact_message.phone }}
+
+                                    </div>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div>
+
+                        <h5 class="fw-bold mb-3">
+
+                            Message
+
+                        </h5>
+
+                        <div
+                            class="bg-light rounded-3 p-4"
+                            style="white-space:pre-line;"
+                        >
+
+                            {{ contact_message.message }}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            {% if contact_message.reply %}
+
+                <div class="card border-0 shadow-sm mt-4">
+
+                    <div class="card-body p-4">
+
+                        <h5 class="fw-bold text-success">
+
+                            <i class="bi bi-check-circle me-2"></i>
+
+                            Your Reply
+
+                        </h5>
+
+                        <hr>
+
+                        <div style="white-space:pre-line;">
+
+                            {{ contact_message.reply }}
+
+                        </div>
+
+
+                        {% if contact_message.replied_at %}
+
+                            <small class="text-muted d-block mt-3">
+
+                                Replied on
+                                {{ contact_message.replied_at|date:"F d, Y - H:i" }}
+
+                            </small>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- REPLY -->
+
+        <div class="col-lg-5">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <span class="text-primary fw-semibold">
+
+                        REPLY TO CUSTOMER
+
+                    </span>
+
+                    <h4 class="fw-bold mt-2">
+
+                        Send Reply
+
+                    </h4>
+
+                    <p class="text-muted">
+
+                        Your reply will be sent to:
+
+                    </p>
+
+
+                    <div class="alert alert-light border">
+
+                        <i class="bi bi-envelope me-2"></i>
+
+                        {{ contact_message.email }}
+
+                    </div>
+
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+
+                        <div class="mb-3">
+
+                            <label
+                                for="reply"
+                                class="form-label fw-semibold"
+                            >
+
+                                Your Reply
+
+                            </label>
+
+
+                            <textarea
+                                name="reply"
+                                id="reply"
+                                class="form-control"
+                                rows="8"
+                                placeholder="Write your reply to the customer..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+
+                            <i class="bi bi-send me-2"></i>
+
+                            Send Reply
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

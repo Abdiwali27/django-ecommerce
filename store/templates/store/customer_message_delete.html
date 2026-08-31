@@ -1,0 +1,142 @@
+{% extends "store/dashboard_base.html" %}
+
+{% block title %}
+Delete Customer Message - My Store
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container-fluid">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body p-4 p-md-5 text-center">
+
+                    <div
+                        class="bg-danger bg-opacity-10
+                               text-danger rounded-circle
+                               d-flex align-items-center
+                               justify-content-center
+                               mx-auto mb-4"
+                        style="width:80px;height:80px;"
+                    >
+
+                        <i
+                            class="bi bi-trash3"
+                            style="font-size:32px;"
+                        ></i>
+
+                    </div>
+
+
+                    <h3 class="fw-bold mb-3">
+                        Delete Customer Message?
+                    </h3>
+
+
+                    <p class="text-muted mb-4">
+
+                        Are you sure you want to delete this
+                        message?
+
+                    </p>
+
+
+                    <div
+                        class="bg-light rounded-3
+                               p-3 mb-4 text-start"
+                    >
+
+                        <div class="mb-2">
+
+                            <strong>
+                                From:
+                            </strong>
+
+                            {{ contact_message.name }}
+
+                        </div>
+
+
+                        <div class="mb-2">
+
+                            <strong>
+                                Email:
+                            </strong>
+
+                            {{ contact_message.email }}
+
+                        </div>
+
+
+                        <div class="mb-2">
+
+                            <strong>
+                                Subject:
+                            </strong>
+
+                            {{ contact_message.subject }}
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Message:
+                            </strong>
+
+                            <p class="mb-0 mt-2 text-muted">
+                                {{ contact_message.message }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+
+                        <a
+                            href="{% url 'customer_message_detail' contact_message.pk %}"
+                            class="btn btn-secondary px-4 me-2"
+                        >
+
+                            <i class="bi bi-arrow-left me-1"></i>
+
+                            Cancel
+
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger px-4"
+                        >
+
+                            <i class="bi bi-trash3 me-1"></i>
+
+                            Delete Message
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

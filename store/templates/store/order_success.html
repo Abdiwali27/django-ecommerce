@@ -1,0 +1,2088 @@
+ {% extends "store/base.html" %}
+
+{% block title %}
+Order Successful | My Store
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+```
+<!-- =====================================================
+     SUCCESS HEADER
+====================================================== -->
+
+<div class="success-header text-center mb-5">
+
+    <div class="success-icon">
+
+        <i class="bi bi-check-lg"></i>
+
+    </div>
+
+    <h1 class="fw-bold mt-4">
+        Order Successful!
+    </h1>
+
+    <p class="text-muted mb-2">
+        Thank you for your order.
+    </p>
+
+    <p class="text-muted">
+        Your order has been received successfully.
+    </p>
+
+</div>
+
+
+<div class="row g-4">
+
+    <!-- =================================================
+         LEFT COLUMN
+    ================================================== -->
+
+    <div class="col-lg-8">
+
+        <!-- =============================================
+             ORDER INFORMATION
+        ============================================== -->
+
+        <div class="success-card mb-4">
+
+            <div class="card-header-custom">
+
+                <div>
+
+                    <span class="section-label">
+                        ORDER
+                    </span>
+
+                    <h3 class="mb-0">
+                        Order #{{ order.id }}
+                    </h3>
+
+                </div>
+
+
+                <div class="order-status">
+
+                    {% if order.order_status == "pending" %}
+
+                        <span class="status-badge status-pending">
+                            <i class="bi bi-clock me-1"></i>
+                            Pending
+                        </span>
+
+                    {% elif order.order_status == "confirmed" %}
+
+                        <span class="status-badge status-confirmed">
+                            <i class="bi bi-check-circle me-1"></i>
+                            Confirmed
+                        </span>
+
+                    {% elif order.order_status == "processing" %}
+
+                        <span class="status-badge status-processing">
+                            <i class="bi bi-box-seam me-1"></i>
+                            Processing
+                        </span>
+
+                    {% elif order.order_status == "shipped" %}
+
+                        <span class="status-badge status-shipped">
+                            <i class="bi bi-truck me-1"></i>
+                            Shipped
+                        </span>
+
+                    {% elif order.order_status == "delivered" %}
+
+                        <span class="status-badge status-delivered">
+                            <i class="bi bi-check2-all me-1"></i>
+                            Delivered
+                        </span>
+
+                    {% elif order.order_status == "cancelled" %}
+
+                        <span class="status-badge status-cancelled">
+                            <i class="bi bi-x-circle me-1"></i>
+                            Cancelled
+                        </span>
+
+                    {% else %}
+
+                        <span class="status-badge status-pending">
+                            {{ order.get_order_status_display }}
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <div class="order-meta">
+
+                <div class="meta-item">
+
+                    <i class="bi bi-calendar3"></i>
+
+                    <div>
+
+                        <small>
+                            Order Date
+                        </small>
+
+                        <strong>
+                            {{ order.created_at|date:"M d, Y" }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="meta-item">
+
+                    <i class="bi bi-clock"></i>
+
+                    <div>
+
+                        <small>
+                            Order Time
+                        </small>
+
+                        <strong>
+                            {{ order.created_at|date:"h:i A" }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="meta-item">
+
+                    <i class="bi bi-credit-card"></i>
+
+                    <div>
+
+                        <small>
+                            Payment
+                        </small>
+
+                        <strong>
+                            {{ order.get_payment_method_display }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =============================================
+             CUSTOMER INFORMATION
+        ============================================== -->
+
+        <div class="success-card mb-4">
+
+            <div class="section-title">
+
+                <div class="section-icon">
+
+                    <i class="bi bi-person-fill"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        Customer Information
+                    </h4>
+
+                    <p>
+                        Delivery information
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="customer-grid">
+
+                <!-- NAME -->
+
+                <div class="customer-item">
+
+                    <span>
+                        Full Name
+                    </span>
+
+                    <strong>
+                        {{ order.full_name }}
+                    </strong>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="customer-item">
+
+                    <span>
+                        Email
+                    </span>
+
+                    <strong>
+                        {{ order.email }}
+                    </strong>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="customer-item">
+
+                    <span>
+                        Phone
+                    </span>
+
+                    <strong>
+                        {{ order.phone }}
+                    </strong>
+
+                </div>
+
+
+                <!-- CITY -->
+
+                <div class="customer-item">
+
+                    <span>
+                        City
+                    </span>
+
+                    <strong>
+                        {{ order.city }}
+                    </strong>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="customer-item customer-address">
+
+                    <span>
+                        Delivery Address
+                    </span>
+
+                    <strong>
+                        {{ order.address }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =============================================
+             ORDER ITEMS
+        ============================================== -->
+
+        <div class="success-card mb-4">
+
+            <div class="section-title">
+
+                <div class="section-icon">
+
+                    <i class="bi bi-bag-check-fill"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        Ordered Products
+                    </h4>
+
+                    <p>
+                        Products included in your order
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="order-products">
+
+                {% for item in order.items.all %}
+
+                    <div class="product-row">
+
+                        <!-- PRODUCT IMAGE -->
+
+                        <div class="product-image">
+
+                            {% if item.product and item.product.image %}
+
+                                <img
+                                    src="{{ item.product.image.url }}"
+                                    alt="{{ item.product_name }}"
+                                >
+
+                            {% else %}
+
+                                <div class="no-product-image">
+
+                                    <i class="bi bi-image"></i>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- PRODUCT INFO -->
+
+                        <div class="product-info">
+
+                            <h5>
+                                {{ item.product_name }}
+                            </h5>
+
+                            <div class="product-details">
+
+                                <span>
+                                    Qty: {{ item.quantity }}
+                                </span>
+
+                                <span>
+                                    ${{ item.price }} each
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SUBTOTAL -->
+
+                        <div class="product-subtotal">
+
+                            <strong>
+                                ${{ item.subtotal }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                {% empty %}
+
+                    <div class="empty-products">
+
+                        <i class="bi bi-bag-x"></i>
+
+                        <p>
+                            No products found for this order.
+                        </p>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- =============================================
+             PAYMENT INFORMATION
+        ============================================== -->
+
+        <div class="success-card">
+
+            <div class="section-title">
+
+                <div class="section-icon">
+
+                    <i class="bi bi-wallet2"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        Payment Information
+                    </h4>
+
+                    <p>
+                        Payment details for your order
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if order.payment_method == "mobile_money" %}
+
+                <!-- MOBILE MONEY -->
+
+                <div class="mobile-payment-box">
+
+                    <div class="payment-method-title">
+
+                        <i class="bi bi-phone-fill"></i>
+
+                        <div>
+
+                            <span>
+                                Payment Method
+                            </span>
+
+                            <strong>
+                                {{ order.get_mobile_money_provider_display }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUSINESS NUMBER -->
+
+                    <div class="business-number-box">
+
+                        <span>
+                            Send Payment To
+                        </span>
+
+                        <strong>
+                            {{ business_payment_number }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- AMOUNT -->
+
+                    <div class="payment-amount">
+
+                        <span>
+                            Amount to Pay
+                        </span>
+
+                        <strong>
+                            ${{ order.total_amount }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- INSTRUCTIONS -->
+
+                    <div class="payment-instructions">
+
+                        <div class="instruction-icon">
+
+                            <i class="bi bi-info-circle-fill"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Payment Instructions
+                            </strong>
+
+                            <p>
+
+                                Please send the exact amount
+                                shown above to the
+                                <strong>
+                                    {{ order.get_mobile_money_provider_display }}
+                                </strong>
+                                business number.
+
+                            </p>
+
+                            <p class="mb-0">
+
+                                Your order will be processed
+                                after the payment has been
+                                confirmed.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            {% elif order.payment_method == "card" %}
+
+                <!-- CARD PAYMENT -->
+
+                <div class="card-payment-box">
+
+                    <div class="payment-method-title">
+
+                        <i class="bi bi-credit-card-fill"></i>
+
+                        <div>
+
+                            <span>
+                                Payment Method
+                            </span>
+
+                            <strong>
+                                Card Payment
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="payment-amount">
+
+                        <span>
+                            Order Total
+                        </span>
+
+                        <strong>
+                            ${{ order.total_amount }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="payment-instructions">
+
+                        <div class="instruction-icon">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Card Payment
+                            </strong>
+
+                            <p class="mb-0">
+
+                                Your card payment information
+                                has been received with this order.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         RIGHT COLUMN
+    ================================================== -->
+
+    <div class="col-lg-4">
+
+        <!-- =============================================
+             ORDER SUMMARY
+        ============================================== -->
+
+        <div class="summary-card mb-4">
+
+            <h3>
+                Order Summary
+            </h3>
+
+
+            <div class="summary-products">
+
+                {% for item in order.items.all %}
+
+                    <div class="summary-product">
+
+                        <span>
+                            {{ item.product_name }}
+                            × {{ item.quantity }}
+                        </span>
+
+                        <strong>
+                            ${{ item.subtotal }}
+                        </strong>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <div class="summary-divider"></div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Payment Status
+                </span>
+
+                {% if order.payment_status == "paid" %}
+
+                    <strong class="text-success">
+                        Paid
+                    </strong>
+
+                {% elif order.payment_status == "failed" %}
+
+                    <strong class="text-danger">
+                        Failed
+                    </strong>
+
+                {% else %}
+
+                    <strong class="text-warning">
+                        Pending
+                    </strong>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="summary-total">
+
+                <span>
+                    Total
+                </span>
+
+                <strong>
+                    ${{ order.total_amount }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =============================================
+             ORDER STATUS
+        ============================================== -->
+
+        <div class="status-card mb-4">
+
+            <h3>
+                Order Status
+            </h3>
+
+
+            <div class="status-timeline">
+
+                <!-- PENDING -->
+
+                <div class="timeline-item active">
+
+                    <div class="timeline-icon">
+
+                        <i class="bi bi-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Order Placed
+                        </strong>
+
+                        <small>
+                            Your order has been received.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIRMED -->
+
+                <div
+                    class="timeline-item
+                    {% if order.order_status in 'confirmed processing shipped delivered' %}
+                        active
+                    {% endif %}"
+                >
+
+                    <div class="timeline-icon">
+
+                        <i class="bi bi-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Confirmed
+                        </strong>
+
+                        <small>
+                            Your order has been confirmed.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROCESSING -->
+
+                <div
+                    class="timeline-item
+                    {% if order.order_status in 'processing shipped delivered' %}
+                        active
+                    {% endif %}"
+                >
+
+                    <div class="timeline-icon">
+
+                        <i class="bi bi-box-seam"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Processing
+                        </strong>
+
+                        <small>
+                            Your order is being prepared.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SHIPPED -->
+
+                <div
+                    class="timeline-item
+                    {% if order.order_status in 'shipped delivered' %}
+                        active
+                    {% endif %}"
+                >
+
+                    <div class="timeline-icon">
+
+                        <i class="bi bi-truck"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Shipped
+                        </strong>
+
+                        <small>
+                            Your order is on the way.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DELIVERED -->
+
+                <div
+                    class="timeline-item
+                    {% if order.order_status == 'delivered' %}
+                        active
+                    {% endif %}"
+                >
+
+                    <div class="timeline-icon">
+
+                        <i class="bi bi-house-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Delivered
+                        </strong>
+
+                        <small>
+                            Order delivered successfully.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% if order.order_status == "cancelled" %}
+
+                <div class="cancelled-box">
+
+                    <i class="bi bi-x-circle-fill"></i>
+
+                    <div>
+
+                        <strong>
+                            Order Cancelled
+                        </strong>
+
+                        <p class="mb-0">
+                            This order has been cancelled.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =============================================
+             ACTIONS
+        ============================================== -->
+
+        <div class="action-card">
+
+            <a
+                href="{% url 'product_list' %}"
+                class="btn btn-primary w-100 mb-3"
+            >
+
+                <i class="bi bi-cart-plus me-2"></i>
+
+                Continue Shopping
+
+            </a>
+
+
+            <button
+                type="button"
+                onclick="window.print()"
+                class="btn btn-outline-secondary w-100"
+            >
+
+                <i class="bi bi-printer me-2"></i>
+
+                Print Order
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+.success-header {
+
+    max-width: 700px;
+
+    margin-left: auto;
+
+    margin-right: auto;
+
+}
+
+
+.success-icon {
+
+    width: 90px;
+
+    height: 90px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e9f8ef;
+
+    color: #198754;
+
+    font-size: 48px;
+
+    box-shadow:
+        0 10px 30px rgba(25, 135, 84, 0.15);
+
+}
+
+
+.success-header h1 {
+
+    font-size: 38px;
+
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.success-card,
+.summary-card,
+.status-card,
+.action-card {
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.07);
+
+}
+
+
+.success-card {
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   ORDER HEADER
+========================================================= */
+
+.card-header-custom {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding-bottom: 22px;
+
+    border-bottom: 1px solid #eeeeee;
+
+}
+
+
+.section-label {
+
+    display: block;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    color: #6c757d;
+
+    margin-bottom: 5px;
+
+}
+
+
+.card-header-custom h3 {
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   ORDER META
+========================================================= */
+
+.order-meta {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+    padding-top: 22px;
+
+}
+
+
+.meta-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.meta-item > i {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #f1f6ff;
+
+    color: #2878ff;
+
+    font-size: 18px;
+
+}
+
+
+.meta-item small {
+
+    display: block;
+
+    color: #6c757d;
+
+    margin-bottom: 3px;
+
+}
+
+
+.meta-item strong {
+
+    display: block;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 8px 13px;
+
+    border-radius: 30px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+.status-pending {
+
+    background: #fff3cd;
+
+    color: #856404;
+
+}
+
+
+.status-confirmed {
+
+    background: #d1ecf1;
+
+    color: #0c5460;
+
+}
+
+
+.status-processing {
+
+    background: #cfe2ff;
+
+    color: #084298;
+
+}
+
+
+.status-shipped {
+
+    background: #e2d9f3;
+
+    color: #59359a;
+
+}
+
+
+.status-delivered {
+
+    background: #d1e7dd;
+
+    color: #0f5132;
+
+}
+
+
+.status-cancelled {
+
+    background: #f8d7da;
+
+    color: #842029;
+
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.section-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #f1f6ff;
+
+    color: #2878ff;
+
+    font-size: 20px;
+
+}
+
+
+.section-title h4 {
+
+    margin: 0;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+}
+
+
+.section-title p {
+
+    margin: 3px 0 0;
+
+    color: #6c757d;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   CUSTOMER INFORMATION
+========================================================= */
+
+.customer-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+
+}
+
+
+.customer-item {
+
+    padding: 15px;
+
+    background: #f8f9fa;
+
+    border-radius: 10px;
+
+}
+
+
+.customer-item span {
+
+    display: block;
+
+    color: #6c757d;
+
+    font-size: 13px;
+
+    margin-bottom: 5px;
+
+}
+
+
+.customer-item strong {
+
+    display: block;
+
+    word-break: break-word;
+
+}
+
+
+.customer-address {
+
+    grid-column: 1 / -1;
+
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+.product-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 16px 0;
+
+    border-bottom: 1px solid #eeeeee;
+
+}
+
+
+.product-row:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.product-image {
+
+    width: 75px;
+
+    height: 75px;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    background: #f8f9fa;
+
+}
+
+
+.product-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+.no-product-image {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #adb5bd;
+
+    font-size: 25px;
+
+}
+
+
+.product-info {
+
+    flex: 1;
+
+}
+
+
+.product-info h5 {
+
+    margin: 0 0 7px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+}
+
+
+.product-details {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    color: #6c757d;
+
+    font-size: 13px;
+
+}
+
+
+.product-subtotal {
+
+    text-align: right;
+
+}
+
+
+.product-subtotal strong {
+
+    font-size: 17px;
+
+}
+
+
+/* =========================================================
+   PAYMENT
+========================================================= */
+
+.mobile-payment-box,
+.card-payment-box {
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    background: #f8faff;
+
+    border: 1px solid #e3edff;
+
+}
+
+
+.payment-method-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid #e1e7ef;
+
+}
+
+
+.payment-method-title > i {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #2878ff;
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+}
+
+
+.payment-method-title span {
+
+    display: block;
+
+    color: #6c757d;
+
+    font-size: 13px;
+
+}
+
+
+.payment-method-title strong {
+
+    display: block;
+
+    font-size: 17px;
+
+    margin-top: 3px;
+
+}
+
+
+/* =========================================================
+   BUSINESS NUMBER
+========================================================= */
+
+.business-number-box {
+
+    margin-top: 18px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 2px dashed #2878ff;
+
+    border-radius: 12px;
+
+}
+
+
+.business-number-box span {
+
+    display: block;
+
+    color: #6c757d;
+
+    font-size: 13px;
+
+    margin-bottom: 7px;
+
+}
+
+
+.business-number-box strong {
+
+    display: block;
+
+    font-size: 28px;
+
+    color: #2878ff;
+
+    letter-spacing: 1px;
+
+}
+
+
+/* =========================================================
+   PAYMENT AMOUNT
+========================================================= */
+
+.payment-amount {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 18px;
+
+    padding: 16px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+}
+
+
+.payment-amount span {
+
+    color: #6c757d;
+
+}
+
+
+.payment-amount strong {
+
+    font-size: 22px;
+
+}
+
+
+/* =========================================================
+   PAYMENT INSTRUCTIONS
+========================================================= */
+
+.payment-instructions {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 18px;
+
+    padding: 16px;
+
+    border-radius: 10px;
+
+    background: #eef6ff;
+
+    color: #245b9c;
+
+}
+
+
+.instruction-icon {
+
+    flex-shrink: 0;
+
+    font-size: 20px;
+
+}
+
+
+.payment-instructions strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+}
+
+
+.payment-instructions p {
+
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.summary-card h3,
+.status-card h3 {
+
+    font-size: 21px;
+
+    font-weight: 700;
+
+    margin-bottom: 22px;
+
+}
+
+
+.summary-product {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 10px 0;
+
+    font-size: 14px;
+
+}
+
+
+.summary-product span {
+
+    color: #495057;
+
+}
+
+
+.summary-product strong {
+
+    white-space: nowrap;
+
+}
+
+
+.summary-divider {
+
+    height: 1px;
+
+    background: #eeeeee;
+
+    margin: 15px 0;
+
+}
+
+
+.summary-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 10px 0;
+
+    font-size: 14px;
+
+}
+
+
+.summary-total {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 10px;
+
+    padding-top: 18px;
+
+    border-top: 2px solid #eeeeee;
+
+}
+
+
+.summary-total span {
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+}
+
+
+.summary-total strong {
+
+    font-size: 25px;
+
+    color: #2878ff;
+
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.status-timeline {
+
+    position: relative;
+
+}
+
+
+.timeline-item {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    padding-bottom: 25px;
+
+    opacity: 0.45;
+
+}
+
+
+.timeline-item:last-child {
+
+    padding-bottom: 0;
+
+}
+
+
+.timeline-item.active {
+
+    opacity: 1;
+
+}
+
+
+.timeline-item:not(:last-child)::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 18px;
+
+    top: 38px;
+
+    width: 2px;
+
+    height: calc(100% - 25px);
+
+    background: #dee2e6;
+
+}
+
+
+.timeline-item.active:not(:last-child)::after {
+
+    background: #2878ff;
+
+}
+
+
+.timeline-icon {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 37px;
+
+    height: 37px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e9ecef;
+
+    color: #6c757d;
+
+}
+
+
+.timeline-item.active .timeline-icon {
+
+    background: #2878ff;
+
+    color: #ffffff;
+
+}
+
+
+.timeline-item strong {
+
+    display: block;
+
+    font-size: 14px;
+
+    margin-top: 2px;
+
+}
+
+
+.timeline-item small {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color: #6c757d;
+
+    line-height: 1.4;
+
+}
+
+
+/* =========================================================
+   CANCELLED
+========================================================= */
+
+.cancelled-box {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-top: 22px;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background: #f8d7da;
+
+    color: #842029;
+
+}
+
+
+.cancelled-box > i {
+
+    font-size: 22px;
+
+}
+
+
+.cancelled-box strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.action-card {
+
+    padding: 20px;
+
+}
+
+
+.action-card .btn {
+
+    padding: 12px 20px;
+
+    border-radius: 10px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 991px) {
+
+    .order-meta {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .success-header h1 {
+
+        font-size: 30px;
+
+    }
+
+
+    .success-card,
+    .summary-card,
+    .status-card,
+    .action-card {
+
+        padding: 20px;
+
+    }
+
+
+    .card-header-custom {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .customer-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .customer-address {
+
+        grid-column: auto;
+
+    }
+
+
+    .product-row {
+
+        align-items: flex-start;
+
+    }
+
+
+    .product-image {
+
+        width: 60px;
+
+        height: 60px;
+
+    }
+
+
+    .product-subtotal strong {
+
+        font-size: 15px;
+
+    }
+
+
+    .business-number-box strong {
+
+        font-size: 23px;
+
+    }
+
+
+    .payment-amount {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+
+    body {
+
+        background: #ffffff !important;
+
+    }
+
+
+    .success-card,
+    .summary-card,
+    .status-card,
+    .action-card {
+
+        box-shadow: none;
+
+        border: 1px solid #dddddd;
+
+    }
+
+
+    .action-card {
+
+        display: none;
+
+    }
+
+
+    .success-header {
+
+        margin-bottom: 25px;
+
+    }
+
+}
+
+</style>
+
+{% endblock %}

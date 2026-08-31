@@ -1,0 +1,421 @@
+{% if request.user.is_authenticated %}
+
+<!-- =====================================================
+     SIDEBAR
+====================================================== -->
+<aside class="dashboard-sidebar bg-dark text-white">
+
+<div class="dashboard-sidebar ">
+
+
+    <!-- =================================================
+         STORE BRAND
+    ================================================== -->
+
+    <div class="sidebar-brand mt-20">
+
+        <i class="bi bi-shop-window me-2"></i>
+
+        <span>
+            My Store
+        </span>
+
+    </div>
+
+
+    <!-- =================================================
+         NAVIGATION
+    ================================================== -->
+
+    <div class="sidebar-menu">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="sidebar-link
+            {% if request.resolver_match.url_name == 'dashboard' %}
+                active
+            {% endif %}"
+        >
+
+            <i class="bi bi-speedometer2"></i>
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- ORDERS -->
+
+        <a
+            href="{% url 'order_list' %}"
+            class="sidebar-link
+            {% if request.resolver_match.url_name == 'order_list' %}
+                active
+            {% endif %}"
+        >
+
+            <i class="bi bi-bag-check"></i>
+
+            <span>
+                Orders
+            </span>
+
+        </a>
+
+
+        <!-- PRODUCTS -->
+
+        <a
+            href="{% url 'product_management' %}"
+            class="sidebar-link
+            {% if request.resolver_match.url_name == 'product_list' %}
+                active
+            {% endif %}"
+        >
+
+            <i class="bi bi-box-seam"></i>
+
+            <span>
+                Products
+            </span>
+
+        </a>
+
+
+        <!-- CATEGORIES -->
+
+        <a
+            href="{% url 'category_management' %}"
+            class="sidebar-link
+            {% if request.resolver_match.url_name == 'category_management' %}
+                active
+            {% endif %}"
+        >
+
+            <i class="bi bi-grid"></i>
+
+            <span>
+                Categories
+            </span>
+
+        </a>
+
+
+        <!-- PAYMENT SETTINGS -->
+
+        <a
+            href="{% url 'payment_settings' %}"
+            class="sidebar-link
+            {% if request.resolver_match.url_name == 'payment_settings' %}
+                active
+            {% endif %}"
+        >
+
+            <i class="bi bi-credit-card"></i>
+
+            <span>
+                Payment Settings
+            </span>
+
+        </a>
+         <a
+            href="{% url 'reports' %}"
+            class="sidebar-link"
+        >
+
+            <i class="bi bi-file-bar-graph me-1"></i>
+
+            Reports
+
+        </a>
+           {% if user.is_superuser %}
+        <a
+            href="{% url 'user_management' %}"
+            class="sidebar-link"
+        >
+            <i class="bi bi-people me-1"></i>
+            Users
+        </a>
+    {% endif %}
+ <!-- CUSTOMER MESSAGES -->
+ <a
+    href="{% url 'customer_messages' %}"
+    class="{% if request.resolver_match.url_name == 'customer_messages' or request.resolver_match.url_name == 'customer_message_detail' %}active{% endif %} sidebar-link"
+>
+
+    <i class="bi bi-chat-left-text"></i>
+
+    <span class="flex-grow-1">
+        Customer Messages
+    </span>
+
+    {% if unread_messages_count > 0 %}
+        <span class="badge bg-danger rounded-pill">
+            {{ unread_messages_count }}
+        </span>
+    {% endif %}
+
+</a>
+<!-- SETTINGS -->
+
+{% if request.user.is_superuser %}
+
+<a
+    href="{% url 'store_settings' %}"
+    class="sidebar-link
+    {% if request.resolver_match.url_name == 'store_settings' %}
+        active
+    {% endif %}"
+>
+
+    <i class="bi bi-gear"></i>
+
+    <span>
+        Settings
+    </span>
+
+</a>
+
+{% endif %}
+
+
+    </div>
+
+
+    <!-- =================================================
+         DIVIDER
+    ================================================== -->
+
+    <hr class="sidebar-divider">
+
+
+    <!-- =================================================
+         VISIT STORE
+    ================================================== -->
+
+    <a
+        href="{% url 'home' %}"
+        class="sidebar-link"
+    >
+
+        <i class="bi bi-shop"></i>
+
+        <span>
+            Visit Store
+        </span>
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     SIDEBAR CSS
+====================================================== -->
+
+<style>
+
+    /* =========================================
+       SIDEBAR
+    ========================================= */
+
+    .dashboard-sidebar {
+
+        min-height: calc(100vh - 70px);
+
+        background-color: #111827;
+
+        color: #ffffff;
+
+        padding: 20px 12px;
+
+        position: sticky;
+
+        top: 0;
+
+    }
+
+
+    /* =========================================
+       BRAND
+    ========================================= */
+
+    .sidebar-brand {
+
+        display: flex;
+
+        align-items: center;
+
+        padding: 12px 15px 25px;
+
+        margin-bottom: 10px;
+
+        font-size: 20px;
+
+        font-weight: 700;
+
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+
+    }
+
+
+    .sidebar-brand i {
+
+        font-size: 22px;
+
+    }
+
+
+    /* =========================================
+       MENU
+    ========================================= */
+
+    .sidebar-menu {
+
+        margin-top: 15px;
+
+    }
+
+
+    /* =========================================
+       LINKS
+    ========================================= */
+
+    .sidebar-link {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        width: 100%;
+
+        padding: 12px 15px;
+
+        margin-bottom: 6px;
+
+        color: #cbd5e1;
+
+        text-decoration: none;
+
+        border-radius: 8px;
+
+        font-size: 14px;
+
+        font-weight: 500;
+
+        transition: all 0.2s ease;
+
+    }
+
+
+    /* =========================================
+       ICON
+    ========================================= */
+
+    .sidebar-link i {
+
+        font-size: 17px;
+
+        width: 22px;
+
+        text-align: center;
+
+    }
+
+
+    /* =========================================
+       HOVER
+    ========================================= */
+
+    .sidebar-link:hover {
+
+        background-color: #1d4ed8;
+
+        color: #ffffff;
+
+    }
+
+
+    /* =========================================
+       ACTIVE
+    ========================================= */
+
+    .sidebar-link.active {
+
+        background-color: #2563eb;
+
+        color: #ffffff;
+
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
+
+    }
+
+
+    /* =========================================
+       DIVIDER
+    ========================================= */
+
+    .sidebar-divider {
+
+        border-color: rgba(255,255,255,0.08);
+
+        margin: 20px 5px;
+
+    }
+    .dashboard-sidebar {
+    position: fixed !important;
+
+    top: 56px !important;
+    left: 0;
+
+    width: 230px;
+
+    height: calc(100vh - 72px);
+
+    overflow-y: auto;
+
+    z-index: 9998;
+}
+
+
+    /* =========================================
+       DASHBOARD MAIN
+    ========================================= */
+
+    .dashboard-sidebar + main {
+
+        min-width: 0;
+
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 767.98px) {
+
+        .dashboard-sidebar {
+
+            position: relative;
+
+            min-height: auto;
+
+        }
+
+    }
+
+</style>
+
+</aside>
+
+{% endif %}

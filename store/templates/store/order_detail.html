@@ -1,0 +1,469 @@
+{% extends "store/dashboard_base.html" %}
+
+
+{% block title %}
+    Order #{{ order.id }}
+{% endblock %}
+
+
+{% block dashboard_content %}
+
+<div class="container py-5">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+        <div>
+
+            <a
+                href="{% url 'order_list' %}"
+                class="text-decoration-none"
+            >
+
+                <i class="bi bi-arrow-left"></i>
+                Back to Orders
+
+            </a>
+
+            <h1 class="fw-bold mt-2 mb-1">
+                Order #{{ order.id }}
+            </h1>
+
+            <p class="text-muted mb-0">
+                Created {{ order.created_at|date:"M d, Y H:i" }}
+            </p>
+
+        </div>
+
+
+        <div class="d-flex gap-2">
+
+            <a
+                href="{% url 'order_update' order.id %}"
+                class="btn btn-primary"
+            >
+
+                <i class="bi bi-pencil-square me-1"></i>
+
+                Update Status
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <!-- =================================================
+             CUSTOMER INFORMATION
+        ================================================== -->
+
+        <div class="col-lg-6">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold mb-4">
+
+                        <i class="bi bi-person-circle me-2"></i>
+
+                        Customer Information
+
+                    </h4>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Full Name
+                        </small>
+
+                        <strong>
+                            {{ order.full_name }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Email
+                        </small>
+
+                        <strong>
+                            {{ order.email }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Phone
+                        </small>
+
+                        <strong>
+                            {{ order.phone }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            City
+                        </small>
+
+                        <strong>
+                            {{ order.city }}
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <small class="text-muted d-block">
+                            Delivery Address
+                        </small>
+
+                        <strong>
+                            {{ order.address }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PAYMENT INFORMATION
+        ================================================== -->
+
+        <div class="col-lg-6">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold mb-4">
+
+                        <i class="bi bi-credit-card me-2"></i>
+
+                        Payment Information
+
+                    </h4>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Payment Method
+                        </small>
+
+                        {% if order.payment_method == "mobile_money" %}
+
+                            <strong>
+                                Mobile Money
+                            </strong>
+
+                        {% else %}
+
+                            <strong>
+                                Card
+                            </strong>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    {% if order.payment_method == "mobile_money" %}
+
+                        <div class="mb-3">
+
+                            <small class="text-muted d-block">
+                                Provider
+                            </small>
+
+                            <strong>
+                                {{ order.get_mobile_money_provider_display }}
+                            </strong>
+
+                        </div>
+
+
+                        {% if order.mobile_money_number %}
+
+                            <div class="mb-3">
+
+                                <small class="text-muted d-block">
+                                    Customer Mobile Number
+                                </small>
+
+                                <strong>
+                                    {{ order.mobile_money_number }}
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+                    {% endif %}
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Payment Status
+                        </small>
+
+                        {% if order.payment_status == "paid" %}
+
+                            <span class="badge bg-success">
+                                Paid
+                            </span>
+
+                        {% elif order.payment_status == "failed" %}
+
+                            <span class="badge bg-danger">
+                                Failed
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div>
+
+                        <small class="text-muted d-block">
+                            Order Status
+                        </small>
+
+                        {% if order.order_status == "delivered" %}
+
+                            <span class="badge bg-success">
+                                Delivered
+                            </span>
+
+                        {% elif order.order_status == "cancelled" %}
+
+                            <span class="badge bg-danger">
+                                Cancelled
+                            </span>
+
+                        {% elif order.order_status == "shipped" %}
+
+                            <span class="badge bg-primary">
+                                Shipped
+                            </span>
+
+                        {% elif order.order_status == "processing" %}
+
+                            <span class="badge bg-info text-dark">
+                                Processing
+                            </span>
+
+                        {% elif order.order_status == "confirmed" %}
+
+                            <span class="badge bg-secondary">
+                                Confirmed
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ORDER PRODUCTS
+        ================================================== -->
+
+        <div class="col-12">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold mb-4">
+
+                        <i class="bi bi-box-seam me-2"></i>
+
+                        Order Products
+
+                    </h4>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table align-middle">
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>
+                                        Product
+                                    </th>
+
+                                    <th>
+                                        Price
+                                    </th>
+
+                                    <th>
+                                        Quantity
+                                    </th>
+
+                                    <th class="text-end">
+                                        Subtotal
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                {% for item in order.items.all %}
+
+                                    <tr>
+
+                                        <td>
+
+                                            <strong>
+                                                {{ item.product_name }}
+                                            </strong>
+
+                                        </td>
+
+
+                                        <td>
+                                            ${{ item.price }}
+                                        </td>
+
+
+                                        <td>
+                                            {{ item.quantity }}
+                                        </td>
+
+
+                                        <td class="text-end">
+
+                                            <strong>
+                                                ${{ item.subtotal }}
+                                            </strong>
+
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+
+                            <tfoot>
+
+                                <tr>
+
+                                    <td
+                                        colspan="3"
+                                        class="text-end fw-bold fs-5"
+                                    >
+                                        Total
+                                    </td>
+
+                                    <td
+                                        class="text-end fw-bold fs-5"
+                                    >
+
+                                        ${{ order.total_amount }}
+
+                                    </td>
+
+                                </tr>
+
+                            </tfoot>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             DELETE ORDER
+        ================================================== -->
+
+        <div class="col-12">
+
+            <div class="text-end">
+
+                <form
+                    method="post"
+                    action="{% url 'order_delete' order.id %}"
+                    onsubmit="return confirm('Are you sure you want to delete this order?');"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="btn btn-outline-danger"
+                    >
+
+                        <i class="bi bi-trash me-1"></i>
+
+                        Delete Order
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,284 @@
+{% extends "store/dashboard_base.html" %}
+ 
+
+{% block title %}
+    {{ page_title }}
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body p-4 p-md-5">
+
+
+                    <!-- HEADER -->
+
+                    <div class="mb-4">
+
+                        <h2 class="fw-bold mb-1">
+                            {{ page_title }}
+                        </h2>
+
+                        <p class="text-muted mb-0">
+                            {% if product %}
+                                Update product information.
+                            {% else %}
+                                Add a new product to your store.
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+
+                    <!-- FORM -->
+
+                    <form
+                        method="post"
+                        enctype="multipart/form-data"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <!-- ERRORS -->
+
+                        {% if form.non_field_errors %}
+
+                            <div class="alert alert-danger">
+
+                                {{ form.non_field_errors }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- CATEGORY -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Category
+                            </label>
+
+                            {{ form.category }}
+
+                            {% if form.category.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.category.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- NAME -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Product Name
+                            </label>
+
+                            {{ form.name }}
+
+                            {% if form.name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.name.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Description
+                            </label>
+
+                            {{ form.description }}
+
+                            {% if form.description.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.description.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- IMAGE -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                Product Image
+                            </label>
+
+                            {{ form.image }}
+
+                            {% if product.image %}
+
+                                <div class="mt-3">
+
+                                    <img
+                                        src="{{ product.image.url }}"
+                                        alt="{{ product.name }}"
+                                        style="width:120px;height:120px;object-fit:cover;"
+                                        class="rounded-3 border"
+                                    >
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- PRICE -->
+
+                        <div class="row g-3 mb-3">
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+                                    Price
+                                </label>
+
+                                {{ form.price }}
+
+                                {% if form.price.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.price.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+                                    Discount Price
+                                </label>
+
+                                {{ form.discount_price }}
+
+                                {% if form.discount_price.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ form.discount_price.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- STOCK -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                Stock Quantity
+                            </label>
+
+                            {{ form.stock }}
+
+                            {% if form.stock.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.stock.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div class="card bg-light border-0 rounded-3 mb-4">
+
+                            <div class="card-body">
+
+                                <div class="form-check mb-3">
+
+                                    {{ form.is_available }}
+
+                                    <label
+                                        class="form-check-label fw-semibold"
+                                        for="{{ form.is_available.id_for_label }}"
+                                    >
+                                        Product is Available
+                                    </label>
+
+                                </div>
+
+
+                                <div class="form-check">
+
+                                    {{ form.featured }}
+
+                                    <label
+                                        class="form-check-label fw-semibold"
+                                        for="{{ form.featured.id_for_label }}"
+                                    >
+                                        Featured Product
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="d-flex gap-2">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+
+                                <i class="bi bi-check-circle me-1"></i>
+
+                                {{ button_text }}
+
+                            </button>
+
+
+                            <a
+                                href="{% url 'product_management' %}"
+                                class="btn btn-outline-secondary"
+                            >
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,671 @@
+{% extends "store/base.html" %}
+
+{% block title %}
+About Us - My Store
+{% endblock %}
+<style>
+    body {
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* FIXED NAVBAR SPACE */
+
+body {
+    padding-top: 70px;
+}
+</style>
+{% block content %}
+
+
+<!-- =====================================================
+     ABOUT HERO - FULL HEIGHT
+====================================================== -->
+
+<section class="bg-dark text-white">
+ 
+<div class="container">
+
+    <div
+        class="row align-items-center"
+        style="min-height: calc(100vh);"
+    >
+
+        <!-- TEXT -->
+
+        <div class="col-lg-7 py-5">
+
+            <span class="badge bg-primary rounded-pill px-3 py-2 mb-3">
+                ABOUT MY STORE
+            </span>
+
+            <h1 class="display-3 fw-bold mb-4">
+                We Make Shopping
+                <span class="text-primary">
+                    Simple & Better
+                </span>
+            </h1>
+
+            <p class="lead text-white-50 mb-4">
+                Welcome to My Store, your trusted place to discover
+                quality products at affordable prices. We are committed
+                to providing a simple, convenient and enjoyable shopping
+                experience for every customer.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3">
+
+                <a
+                    href="{% url 'product_list' %}"
+                    class="btn btn-primary btn-lg px-4"
+                >
+                    <i class="bi bi-shop me-2"></i>
+                    Shop Now
+                </a>
+
+                <a
+                    href="{% url 'contact' %}"
+                    class="btn btn-outline-light btn-lg px-4"
+                >
+                    <i class="bi bi-envelope me-2"></i>
+                    Contact Us
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- VISUAL -->
+
+        <div class="col-lg-5 text-center py-5">
+
+            <div
+                class="bg-primary bg-opacity-10 rounded-circle
+                d-flex align-items-center justify-content-center
+                mx-auto"
+                style="
+                    width:300px;
+                    height:300px;
+                "
+            >
+
+                <i
+                    class="bi bi-bag-heart text-primary"
+                    style="font-size:130px;"
+                ></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</section>
+
+<!-- =====================================================
+     ABOUT MY STORE
+====================================================== -->
+
+<section class="py-5 bg-light">
+
+```
+<div class="container py-lg-4">
+
+    <div class="row align-items-center g-5">
+
+        <!-- IMAGE / ICON -->
+
+        <div class="col-lg-5">
+
+            <div
+                class="bg-white rounded-4 shadow-sm
+                d-flex align-items-center justify-content-center"
+                style="min-height:350px;"
+            >
+
+                <div class="text-center">
+
+                    <div
+                        class="bg-primary bg-opacity-10
+                        rounded-circle
+                        d-flex align-items-center
+                        justify-content-center
+                        mx-auto"
+                        style="
+                            width:140px;
+                            height:140px;
+                        "
+                    >
+
+                        <i
+                            class="bi bi-shop text-primary"
+                            style="font-size:65px;"
+                        ></i>
+
+                    </div>
+
+                    <h4 class="fw-bold mt-4">
+                        My Store
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Quality • Value • Service
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTENT -->
+
+        <div class="col-lg-7">
+
+            <span class="text-primary fw-semibold">
+                WHO WE ARE
+            </span>
+
+            <h2 class="fw-bold mt-2 mb-4">
+                About My Store
+            </h2>
+
+            <p class="text-muted">
+                My Store is an online shopping platform designed to
+                make it easier for customers to discover and purchase
+                products they need.
+            </p>
+
+            <p class="text-muted">
+                We believe that shopping should be simple, convenient
+                and accessible. That's why we focus on presenting
+                quality products, clear pricing and an easy checkout
+                experience.
+            </p>
+
+            <p class="text-muted mb-0">
+                Our goal is to build a store that customers can trust
+                and return to whenever they need something.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</section>
+
+<!-- =====================================================
+     MISSION & VISION
+====================================================== -->
+
+<section class="py-5 bg-light">
+ 
+<div class="container py-lg-4">
+
+    <div class="text-center mb-5">
+
+        <span class="text-primary fw-semibold">
+            OUR PURPOSE
+        </span>
+
+        <h2 class="fw-bold mt-2">
+            Mission & Vision
+        </h2>
+
+        <p class="text-muted">
+            What drives My Store forward.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+        <!-- MISSION -->
+
+        <div class="col-md-6">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body p-5">
+
+                    <div
+                        class="bg-primary bg-opacity-10
+                        text-primary rounded-3
+                        d-flex align-items-center
+                        justify-content-center mb-4"
+                        style="
+                            width:65px;
+                            height:65px;
+                        "
+                    >
+
+                        <i
+                            class="bi bi-bullseye"
+                            style="font-size:30px;"
+                        ></i>
+
+                    </div>
+
+                    <h4 class="fw-bold mb-3">
+                        Our Mission
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Our mission is to provide customers with
+                        quality products, affordable prices and a
+                        smooth shopping experience while delivering
+                        excellent customer service.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- VISION -->
+
+        <div class="col-md-6">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body p-5">
+
+                    <div
+                        class="bg-success bg-opacity-10
+                        text-success rounded-3
+                        d-flex align-items-center
+                        justify-content-center mb-4"
+                        style="
+                            width:65px;
+                            height:65px;
+                        "
+                    >
+
+                        <i
+                            class="bi bi-eye"
+                            style="font-size:30px;"
+                        ></i>
+
+                    </div>
+
+                    <h4 class="fw-bold mb-3">
+                        Our Vision
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Our vision is to become a trusted shopping
+                        destination where customers can easily find
+                        products they love and enjoy a reliable
+                        shopping experience.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- =====================================================
+     WHY CHOOSE US
+====================================================== -->
+
+<section class="py-5 bg-light">
+
+```
+<div class="container py-lg-4">
+
+    <div class="text-center mb-5">
+
+        <span class="text-primary fw-semibold">
+            WHY CHOOSE US
+        </span>
+
+        <h2 class="fw-bold mt-2">
+            Why Shop With Us?
+        </h2>
+
+        <p class="text-muted">
+            We focus on what matters most to our customers.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+        <!-- QUALITY -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div
+                        class="bg-primary bg-opacity-10
+                        text-primary rounded-circle
+                        d-flex align-items-center
+                        justify-content-center
+                        mx-auto mb-4"
+                        style="
+                            width:70px;
+                            height:70px;
+                        "
+                    >
+
+                        <i
+                            class="bi bi-award"
+                            style="font-size:30px;"
+                        ></i>
+
+                    </div>
+
+                    <h5 class="fw-bold">
+                        Quality
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        Carefully selected products with
+                        quality in mind.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AFFORDABLE -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div
+                        class="bg-success bg-opacity-10
+                        text-success rounded-circle
+                        d-flex align-items-center
+                        justify-content-center
+                        mx-auto mb-4"
+                        style="
+                            width:70px;
+                            height:70px;
+                        "
+                    >
+
+                        <i
+                            class="bi bi-tags"
+                            style="font-size:30px;"
+                        ></i>
+
+                    </div>
+
+                    <h5 class="fw-bold">
+                        Affordable
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        Competitive prices and great
+                        value for your money.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- EASY SHOPPING -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div
+                        class="bg-warning bg-opacity-10
+                        text-warning rounded-circle
+                        d-flex align-items-center
+                        justify-content-center
+                        mx-auto mb-4"
+                        style="
+                            width:70px;
+                            height:70px;
+                        "
+                    >
+
+                        <i
+                            class="bi bi-cart-check"
+                            style="font-size:30px;"
+                        ></i>
+
+                    </div>
+
+                    <h5 class="fw-bold">
+                        Easy Shopping
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        Simple browsing, shopping and
+                        checkout experience.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUPPORT -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div
+                        class="bg-danger bg-opacity-10
+                        text-danger rounded-circle
+                        d-flex align-items-center
+                        justify-content-center
+                        mx-auto mb-4"
+                        style="
+                            width:70px;
+                            height:70px;
+                        "
+                    >
+
+                        <i
+                            class="bi bi-headset"
+                            style="font-size:30px;"
+                        ></i>
+
+                    </div>
+
+                    <h5 class="fw-bold">
+                        Support
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        We are ready to help whenever
+                        you need us.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+ 
+
+</section>
+
+<!-- =====================================================
+     STATS
+====================================================== -->
+ <section class="py-5 bg-white text-light border border-dark">
+
+    <div class="container py-3">
+
+        <div class="row text-center g-3">
+
+            <!-- QUALITY -->
+            <div class="col-6 col-md-3">
+                <div class="bg-dark pb-3 pt-3 rounded-3 h-100">
+
+                    <i
+                        class="bi bi-box-seam text-primary"
+                        style="font-size:35px;"
+                    ></i>
+
+                    <h2 class="fw-bold mt-3">
+                        Quality
+                    </h2>
+
+                    <p class="text-white-50 mb-0">
+                        Products
+                    </p>
+
+                </div>
+            </div>
+
+
+            <!-- PRICES -->
+            <div class="col-6 col-md-3">
+                <div class="bg-dark pb-3 pt-3 rounded-3 h-100">
+
+                    <i
+                        class="bi bi-tags text-primary"
+                        style="font-size:35px;"
+                    ></i>
+
+                    <h2 class="fw-bold mt-3">
+                        Great
+                    </h2>
+
+                    <p class="text-white-50 mb-0">
+                        Prices
+                    </p>
+
+                </div>
+            </div>
+
+
+            <!-- SHOPPING -->
+            <div class="col-6 col-md-3">
+                <div class="bg-dark pb-3 pt-3 rounded-3 h-100">
+
+                    <i
+                        class="bi bi-cart-check text-primary"
+                        style="font-size:35px;"
+                    ></i>
+
+                    <h2 class="fw-bold mt-3">
+                        Easy
+                    </h2>
+
+                    <p class="text-white-50 mb-0">
+                        Shopping
+                    </p>
+
+                </div>
+            </div>
+
+
+            <!-- CUSTOMERS -->
+            <div class="col-6 col-md-3">
+                <div class="bg-dark pb-3 pt-3 rounded-3 h-100">
+
+                    <i
+                        class="bi bi-heart text-primary"
+                        style="font-size:35px;"
+                    ></i>
+
+                    <h2 class="fw-bold mt-3">
+                        Happy
+                    </h2>
+
+                    <p class="text-white-50 mb-0">
+                        Customers
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     CTA
+====================================================== -->
+
+<section class="py-5 bg-light">
+
+ 
+<div class="container py-3">
+
+    <div
+        class="text-dark rounded-4
+        p-5 text-center shadow"
+    >
+
+        <h2 class="fw-bold mb-3">
+            Ready to Explore Our Store?
+        </h2>
+
+        <p class="text-dark-50 mb-4">
+            Discover our products and find something
+            perfect for you.
+        </p>
+
+        <a
+            href="{% url 'product_list' %}"
+            class="btn btn-primary btn-lg px-5"
+        >
+            <i class="bi bi-shop me-2"></i>
+            Start Shopping
+        </a>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+{% endblock %}

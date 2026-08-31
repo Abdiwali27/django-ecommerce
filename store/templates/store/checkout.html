@@ -1,0 +1,1327 @@
+ {% extends "store/base.html" %}
+
+{% block title %}
+    Checkout | My Store
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row g-4">
+
+        <!-- =================================================
+             CHECKOUT FORM
+        ================================================= -->
+
+        <div class="col-lg-8">
+
+            <div class="checkout-card">
+
+                <!-- HEADER -->
+
+                <div class="checkout-header">
+
+                    <h2>
+                        Checkout
+                    </h2>
+
+                    <p>
+                        Complete your information and choose
+                        your payment method.
+                    </p>
+
+                </div>
+
+
+                <!-- FORM -->
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+
+                    <!-- =========================================
+                         CUSTOMER INFORMATION
+                    ========================================== -->
+
+                    <div class="checkout-section">
+
+                        <h4>
+                            Customer Information
+                        </h4>
+
+
+                        <div class="row g-3">
+
+                            <!-- FULL NAME -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Full Name
+                                </label>
+
+                                {{ form.full_name }}
+
+                                {% if form.full_name.errors %}
+
+                                    <div class="text-danger small">
+                                        {{ form.full_name.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- EMAIL -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Email
+                                </label>
+
+                                {{ form.email }}
+
+                                {% if form.email.errors %}
+
+                                    <div class="text-danger small">
+                                        {{ form.email.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- PHONE -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Phone
+                                </label>
+
+                                {{ form.phone }}
+
+                                {% if form.phone.errors %}
+
+                                    <div class="text-danger small">
+                                        {{ form.phone.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- CITY -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    City
+                                </label>
+
+                                {{ form.city }}
+
+                                {% if form.city.errors %}
+
+                                    <div class="text-danger small">
+                                        {{ form.city.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- DELIVERY ADDRESS -->
+
+                            <div class="col-12">
+
+                                <label class="form-label">
+                                    Delivery Address
+                                </label>
+
+                                {{ form.address }}
+
+                                {% if form.address.errors %}
+
+                                    <div class="text-danger small">
+                                        {{ form.address.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         PAYMENT METHOD
+                    ========================================== -->
+
+                    <div class="checkout-section">
+
+                        <h4>
+                            Payment Method
+                        </h4>
+
+
+                        <div class="payment-methods">
+
+                            {% for radio in form.payment_method %}
+
+                                <label class="payment-option">
+
+                                    {{ radio.tag }}
+
+                                    <span>
+
+                                        {% if radio.choice_label == "Card Payment" %}
+
+                                            <i class="bi bi-credit-card-fill"></i>
+
+                                        {% else %}
+
+                                            <i class="bi bi-phone-fill"></i>
+
+                                        {% endif %}
+
+                                        {{ radio.choice_label }}
+
+                                    </span>
+
+                                </label>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        {% if form.payment_method.errors %}
+
+                            <div class="text-danger small mt-2">
+
+                                {{ form.payment_method.errors }}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- =========================================
+                         CARD PAYMENT
+                    ========================================== -->
+
+                    <div
+                        id="cardPaymentSection"
+                        class="payment-details"
+                    >
+
+                        <h4>
+                            Card Details
+                        </h4>
+
+
+                        <div class="row g-3">
+
+                            <!-- CARD HOLDER -->
+
+                            <div class="col-12">
+
+                                <label class="form-label">
+                                    Card Holder Name
+                                </label>
+
+                                {{ form.card_holder }}
+
+                                {% if form.card_holder.errors %}
+
+                                    <div class="text-danger small">
+                                        {{ form.card_holder.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- CARD NUMBER -->
+
+                            <div class="col-12">
+
+                                <label class="form-label">
+                                    Card Number
+                                </label>
+
+                                {{ form.card_number }}
+
+                                {% if form.card_number.errors %}
+
+                                    <div class="text-danger small">
+                                        {{ form.card_number.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- EXPIRY -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Expiry Date
+                                </label>
+
+                                {{ form.expiry_date }}
+
+                                {% if form.expiry_date.errors %}
+
+                                    <div class="text-danger small">
+                                        {{ form.expiry_date.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- CVV -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    CVV
+                                </label>
+
+                                {{ form.cvv }}
+
+                                {% if form.cvv.errors %}
+
+                                    <div class="text-danger small">
+                                        {{ form.cvv.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         MOBILE MONEY
+                    ========================================== -->
+
+                    <div
+                        id="mobileMoneySection"
+                        class="payment-details"
+                    >
+
+                        <h4>
+                            Mobile Money
+                        </h4>
+
+
+                        <p class="payment-help">
+
+                            Select the mobile money service
+                            you want to use.
+
+                        </p>
+
+
+                        <!-- =====================================
+                             PROVIDERS
+                        ====================================== -->
+
+                        <div class="mobile-providers">
+
+                            {% for radio in form.mobile_money_provider %}
+
+                                <label class="provider-option">
+
+                                    {{ radio.tag }}
+
+                                    <span>
+
+                                        {% if radio.choice_label == "Zaad" %}
+
+                                            <i class="bi bi-phone-fill"></i>
+
+                                        {% elif radio.choice_label == "E-Dahab" %}
+
+                                            <i class="bi bi-phone-fill"></i>
+
+                                        {% elif radio.choice_label == "Sahal" %}
+
+                                            <i class="bi bi-phone-fill"></i>
+
+                                        {% endif %}
+
+                                        {{ radio.choice_label }}
+
+                                    </span>
+
+                                </label>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        {% if form.mobile_money_provider.errors %}
+
+                            <div class="text-danger small mt-2">
+
+                                {{ form.mobile_money_provider.errors }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- =====================================
+                             ZAAD BUSINESS NUMBER
+                        ====================================== -->
+
+                        <div
+                            id="zaadInfo"
+                            class="payment-number"
+                        >
+
+                            <i class="bi bi-phone-fill"></i>
+
+                            <div>
+
+                                <small>
+                                    Send payment to Zaad
+                                </small>
+
+                                <strong>
+                                    {{ payment_settings.zaad_number }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =====================================
+                             E-DAHAB BUSINESS NUMBER
+                        ====================================== -->
+
+                        <div
+                            id="edahabInfo"
+                            class="payment-number"
+                        >
+
+                            <i class="bi bi-phone-fill"></i>
+
+                            <div>
+
+                                <small>
+                                    Send payment to E-Dahab
+                                </small>
+
+                                <strong>
+                                    {{ payment_settings.edahab_number }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =====================================
+                             SAHAL BUSINESS NUMBER
+                        ====================================== -->
+
+                        <div
+                            id="sahalInfo"
+                            class="payment-number"
+                        >
+
+                            <i class="bi bi-phone-fill"></i>
+
+                            <div>
+
+                                <small>
+                                    Send payment to Sahal
+                                </small>
+
+                                <strong>
+                                    {{ payment_settings.sahal_number }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                       
+
+                        <!-- =====================================
+                             PAYMENT INSTRUCTION
+                        ====================================== -->
+
+                        <div
+                            id="mobilePaymentInstruction"
+                            class="payment-instruction"
+                        >
+
+                            <i class="bi bi-info-circle-fill"></i>
+
+                            <span>
+
+                                Send the exact order total to
+                                the business number displayed above.
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         FORM ERRORS
+                    ========================================== -->
+
+                    {% if form.errors %}
+
+                        <div class="alert alert-danger mt-4">
+
+                            <strong>
+                                Please fix the following:
+                            </strong>
+
+
+                            {{ form.non_field_errors }}
+
+
+                            {% for field in form %}
+
+                                {% if field.errors %}
+
+                                    <div class="mt-2">
+
+                                        <strong>
+                                            {{ field.label }}:
+                                        </strong>
+
+                                        {{ field.errors }}
+
+                                    </div>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- =========================================
+                         SUBMIT
+                    ========================================== -->
+
+                    <div class="checkout-submit">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-lg w-100"
+                        >
+
+                            <i class="bi bi-check-circle-fill me-2"></i>
+
+                            Place Order
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ORDER SUMMARY
+        ================================================= -->
+
+        <div class="col-lg-4">
+
+            <div class="checkout-summary">
+
+                <h3>
+                    Order Summary
+                </h3>
+
+
+                {% if cart_items %}
+
+                    {% for item in cart_items %}
+
+                        <div class="summary-item">
+
+                            <div>
+
+                                <strong>
+                                    {{ item.product.name }}
+                                </strong>
+
+                                <small>
+                                    Qty: {{ item.quantity }}
+                                </small>
+
+                            </div>
+
+
+                            <span>
+                                ${{ item.subtotal }}
+                            </span>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p class="text-muted">
+                        Your cart is empty.
+                    </p>
+
+                {% endif %}
+
+
+                <hr>
+
+
+                <div class="summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ${{ cart_total }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+/* =========================================================
+   CHECKOUT CARD
+========================================================= */
+
+.checkout-card,
+.checkout-summary {
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.08);
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.checkout-header {
+
+    margin-bottom: 30px;
+
+}
+
+.checkout-header h2 {
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+
+}
+
+.checkout-header p {
+
+    color: #6c757d;
+
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.checkout-section {
+
+    padding: 25px 0;
+
+    border-top: 1px solid #eeeeee;
+
+}
+
+.checkout-section h4 {
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    margin-bottom: 20px;
+
+}
+
+
+/* =========================================================
+   PAYMENT METHODS
+========================================================= */
+
+.payment-methods,
+.mobile-providers {
+
+    display: grid;
+
+    gap: 12px;
+
+}
+
+
+.payment-option,
+.provider-option {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 10px;
+
+    padding: 15px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+.payment-option:hover,
+.provider-option:hover {
+
+    border-color: #2878ff;
+
+    background: #f7faff;
+
+}
+
+
+.payment-option input,
+.provider-option input {
+
+    accent-color: #2878ff;
+
+}
+
+
+.payment-option i,
+.provider-option i {
+
+    color: #2878ff;
+
+    font-size: 20px;
+
+}
+
+
+/* =========================================================
+   PAYMENT DETAILS
+========================================================= */
+
+.payment-details {
+
+    display: none;
+
+    padding: 25px;
+
+    margin-top: 10px;
+
+    border-radius: 12px;
+
+    background: #f8f9fa;
+
+}
+
+
+.payment-details.active {
+
+    display: block;
+
+}
+
+
+/* =========================================================
+   PAYMENT NUMBER
+========================================================= */
+
+.payment-number {
+
+    display: none;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 20px;
+
+    padding: 18px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+
+}
+
+
+.payment-number.active {
+
+    display: flex;
+
+}
+
+
+.payment-number > i {
+
+    font-size: 28px;
+
+    color: #2878ff;
+
+}
+
+
+.payment-number small {
+
+    display: block;
+
+    color: #6c757d;
+
+}
+
+
+.payment-number strong {
+
+    display: block;
+
+    font-size: 20px;
+
+    margin-top: 4px;
+
+}
+
+
+/* =========================================================
+   CUSTOMER MOBILE NUMBER
+========================================================= */
+
+.customer-mobile-number {
+
+    margin-top: 25px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 10px;
+
+}
+
+
+.customer-mobile-number label {
+
+    font-weight: 600;
+
+}
+
+
+.customer-mobile-number p {
+
+    margin-bottom: 10px;
+
+}
+
+
+/* =========================================================
+   PAYMENT INSTRUCTION
+========================================================= */
+
+.payment-instruction {
+
+    display: none;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 15px;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background: #eef6ff;
+
+    color: #245b9c;
+
+    font-size: 14px;
+
+}
+
+
+.payment-instruction.active {
+
+    display: flex;
+
+}
+
+
+.payment-instruction i {
+
+    font-size: 18px;
+
+}
+
+
+/* =========================================================
+   ORDER SUMMARY
+========================================================= */
+
+.checkout-summary h3 {
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    margin-bottom: 25px;
+
+}
+
+
+.summary-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #eeeeee;
+
+}
+
+
+.summary-item strong,
+.summary-item small {
+
+    display: block;
+
+}
+
+
+.summary-item small {
+
+    color: #6c757d;
+
+    margin-top: 4px;
+
+}
+
+
+.summary-total {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-size: 20px;
+
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.checkout-submit {
+
+    margin-top: 25px;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .checkout-card,
+    .checkout-summary {
+
+        padding: 20px;
+
+    }
+
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =====================================================
+       PAYMENT METHOD
+    ===================================================== */
+
+    const paymentMethods =
+        document.querySelectorAll(
+            'input[name="payment_method"]'
+        );
+
+
+    /* =====================================================
+       MOBILE MONEY PROVIDER
+
+       IMPORTANT:
+       forms.py must use:
+
+       mobile_money_provider
+    ===================================================== */
+
+    const mobileProviders =
+        document.querySelectorAll(
+            'input[name="mobile_money_provider"]'
+        );
+
+
+    /* =====================================================
+       SECTIONS
+    ===================================================== */
+
+    const cardSection =
+        document.getElementById(
+            "cardPaymentSection"
+        );
+
+
+    const mobileSection =
+        document.getElementById(
+            "mobileMoneySection"
+        );
+
+
+    /* =====================================================
+       BUSINESS NUMBERS
+    ===================================================== */
+
+    const zaadInfo =
+        document.getElementById(
+            "zaadInfo"
+        );
+
+
+    const edahabInfo =
+        document.getElementById(
+            "edahabInfo"
+        );
+
+
+    const sahalInfo =
+        document.getElementById(
+            "sahalInfo"
+        );
+
+
+    const instruction =
+        document.getElementById(
+            "mobilePaymentInstruction"
+        );
+
+
+    /* =====================================================
+       CUSTOMER NUMBER
+    ===================================================== */
+
+    const customerMobileNumber =
+        document.getElementById(
+            "customerMobileNumber"
+        );
+
+
+    /* =====================================================
+       UPDATE PAYMENT METHOD
+    ===================================================== */
+
+    function updatePaymentMethod() {
+
+        const selected =
+            document.querySelector(
+                'input[name="payment_method"]:checked'
+            );
+
+
+        /* Hide card */
+
+        cardSection.classList.remove(
+            "active"
+        );
+
+
+        /* Hide mobile money */
+
+        mobileSection.classList.remove(
+            "active"
+        );
+
+
+        if (!selected) {
+
+            return;
+
+        }
+
+
+        /* =================================================
+           CARD
+        ================================================= */
+
+        if (
+            selected.value ===
+            "card"
+        ) {
+
+            cardSection.classList.add(
+                "active"
+            );
+
+        }
+
+
+        /* =================================================
+           MOBILE MONEY
+        ================================================= */
+
+        if (
+            selected.value ===
+            "mobile_money"
+        ) {
+
+            mobileSection.classList.add(
+                "active"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       UPDATE MOBILE PROVIDER
+    ===================================================== */
+
+    function updateMobileProvider() {
+
+        /* Hide all business numbers */
+
+        zaadInfo.classList.remove(
+            "active"
+        );
+
+
+        edahabInfo.classList.remove(
+            "active"
+        );
+
+
+        sahalInfo.classList.remove(
+            "active"
+        );
+
+
+        instruction.classList.remove(
+            "active"
+        );
+
+
+        const selected =
+            document.querySelector(
+                'input[name="mobile_money_provider"]:checked'
+            );
+
+
+        if (!selected) {
+
+            return;
+
+        }
+
+
+        /* =================================================
+           ZAAD
+        ================================================= */
+
+        if (
+            selected.value ===
+            "zaad"
+        ) {
+
+            zaadInfo.classList.add(
+                "active"
+            );
+
+            instruction.classList.add(
+                "active"
+            );
+
+        }
+
+
+        /* =================================================
+           E-DAHAB
+        ================================================= */
+
+        if (
+            selected.value ===
+            "edahab"
+        ) {
+
+            edahabInfo.classList.add(
+                "active"
+            );
+
+            instruction.classList.add(
+                "active"
+            );
+
+        }
+
+
+        /* =================================================
+           SAHAL
+        ================================================= */
+
+        if (
+            selected.value ===
+            "sahal"
+        ) {
+
+            sahalInfo.classList.add(
+                "active"
+            );
+
+            instruction.classList.add(
+                "active"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PAYMENT METHOD EVENTS
+    ===================================================== */
+
+    paymentMethods.forEach(
+        function (radio) {
+
+            radio.addEventListener(
+                "change",
+                updatePaymentMethod
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       MOBILE PROVIDER EVENTS
+    ===================================================== */
+
+    mobileProviders.forEach(
+        function (radio) {
+
+            radio.addEventListener(
+                "change",
+                updateMobileProvider
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       INITIAL LOAD
+    ===================================================== */
+
+    updatePaymentMethod();
+
+    updateMobileProvider();
+
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,507 @@
+{% extends "store/base.html" %}
+
+
+{% block title %}
+    Shop - My Store
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+/* =====================================================
+   PRODUCT CARD DESIGN
+===================================================== */
+
+.product-card {
+    border: 1px solid #eeeeee !important;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: #ffffff;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12) !important;
+}
+
+
+/* =====================================================
+   PRODUCT IMAGE
+===================================================== */
+
+.product-image {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+
+/* =====================================================
+   IMAGE AREA
+===================================================== */
+
+.product-image-area {
+    height: 230px;
+    overflow: hidden;
+    background: #f8f9fa;
+}
+
+
+/* =====================================================
+   PRODUCT TITLE
+===================================================== */
+
+.product-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #212529;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
+.product-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #6c757d;
+
+    display: -webkit-box;
+    
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    min-height: 45px;
+}
+
+
+/* =====================================================
+   CATEGORY
+===================================================== */
+
+.product-category {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+
+/* =====================================================
+   PRICE
+===================================================== */
+
+.product-price {
+    font-size: 21px;
+    font-weight: 700;
+    color: #198754;
+}
+
+.product-old-price {
+    font-size: 14px;
+    color: #6c757d;
+    text-decoration: line-through;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.product-card .btn {
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.product-card .btn-primary:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   CART BUTTON
+===================================================== */
+
+.cart-button {
+    width: 46px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =====================================================
+   STOCK BADGE
+===================================================== */
+
+.stock-badge {
+    backdrop-filter: blur(5px);
+    font-size: 11px;
+    padding: 7px 11px;
+}
+
+
+/* =====================================================
+   NO PRODUCTS
+===================================================== */
+
+.empty-products {
+    background: #f8f9fa;
+    border-radius: 20px;
+    padding: 70px 20px;
+}
+
+</style>
+
+
+<div class="container-fluid p-8" style="margin-top: 75px;">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Shop
+        </h1>
+
+        <p class="text-muted">
+            Browse our latest products
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         CATEGORY FILTER
+    ====================================================== -->
+
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
+
+
+        <!-- ALL -->
+
+        <a
+            href="{% url 'product_list' %}"
+            class="btn
+            {% if not selected_category %}
+                btn-primary
+            {% else %}
+                btn-outline-primary
+            {% endif %}"
+        >
+
+            All Products
+
+        </a>
+
+
+        <!-- CATEGORIES -->
+
+        {% for category in categories %}
+
+            <a
+                href="{% url 'product_list' %}?category={{ category.slug }}"
+                class="btn
+                {% if selected_category == category.slug %}
+                    btn-primary
+                {% else %}
+                    btn-outline-primary
+                {% endif %}"
+            >
+
+                {{ category.name }}
+
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- =====================================================
+         PRODUCTS
+    ====================================================== -->
+
+    <div class="row g-4">
+
+
+        {% if products %}
+
+
+            {% for product in products %}
+
+                <!-- =================================================
+                     12 COLUMNS → 4 CARDS
+                ================================================== -->
+
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+
+
+                    <div class="card border-0 shadow-sm rounded-4 h-100 product-card">
+
+
+                        <!-- IMAGE -->
+
+                        <div class="position-relative product-image-area">
+
+
+                            {% if product.image %}
+
+                                <img
+                                    src="{{ product.image.url }}"
+                                    alt="{{ product.name }}"
+                                    class="card-img-top rounded-top-4 product-image"
+                                >
+
+                            {% else %}
+
+                                <div
+                                    class="bg-light d-flex align-items-center justify-content-center rounded-top-4"
+                                    style="height:230px;"
+                                >
+
+                                    <i
+                                        class="bi bi-image text-muted"
+                                        style="font-size:50px;"
+                                    ></i>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- STOCK -->
+
+                            {% if product.stock == 0 %}
+
+                                <span
+                                    class="position-absolute top-0 end-0 badge bg-danger rounded-pill m-3 stock-badge"
+                                >
+
+                                    <i class="bi bi-x-circle me-1"></i>
+
+                                    Out of Stock
+
+                                </span>
+
+                            {% elif product.stock <= 5 %}
+
+                                <span
+                                    class="position-absolute top-0 end-0 badge bg-warning text-dark rounded-pill m-3 stock-badge"
+                                >
+
+                                    <i class="bi bi-exclamation-circle me-1"></i>
+
+                                    Only {{ product.stock }} left
+
+                                </span>
+
+                            {% else %}
+
+                                <span
+                                    class="position-absolute top-0 end-0 badge bg-success rounded-pill m-3 stock-badge"
+                                >
+
+                                    <i class="bi bi-check-circle me-1"></i>
+
+                                    In Stock
+
+                                </span>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                        <!-- BODY -->
+
+                        <div class="card-body p-4 d-flex flex-column">
+
+
+                            <!-- CATEGORY -->
+
+                            <small class="product-category mb-2">
+
+                                <i class="bi bi-tag me-1"></i>
+
+                                {{ product.category.name }}
+
+                            </small>
+
+
+                            <!-- NAME -->
+
+                            <h5 class="product-title mb-2">
+
+                                {{ product.name }}
+
+                            </h5>
+
+
+                            <!-- DESCRIPTION -->
+
+                            <p class="product-description mb-3">
+
+                                {{ product.description|truncatechars:70 }}
+
+                            </p>
+
+
+                            <!-- PRICE -->
+
+                            <div class="mb-3">
+
+
+                                {% if product.discount_price %}
+
+                                    <span class="product-old-price me-2">
+
+                                        ${{ product.price }}
+
+                                    </span>
+
+
+                                    <strong class="product-price">
+
+                                        ${{ product.discount_price }}
+
+                                    </strong>
+
+                                {% else %}
+
+                                    <strong class="product-price">
+
+                                        ${{ product.price }}
+
+                                    </strong>
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                            <!-- BUTTONS -->
+
+                            <div class="mt-auto d-flex gap-2">
+
+
+                                <a
+                                    href="{% url 'product_detail' product.slug %}"
+                                    class="btn btn-outline-primary flex-grow-1"
+                                >
+
+                                    <i class="bi bi-eye me-1"></i>
+
+                                    View
+
+                                </a>
+
+
+                                {% if product.stock > 0 %}
+
+                                    <a
+                                        href="{% url 'cart_add' product.id %}"
+                                        class="btn btn-primary cart-button"
+                                    >
+
+                                        <i class="bi bi-cart-plus"></i>
+
+                                    </a>
+
+                                {% else %}
+
+                                    <button
+                                        class="btn btn-secondary cart-button"
+                                        disabled
+                                    >
+
+                                        <i class="bi bi-cart-x"></i>
+
+                                    </button>
+
+                                {% endif %}
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <!-- NO PRODUCTS -->
+
+            <div class="col-12">
+
+                <div class="text-center empty-products">
+
+
+                    <i
+                        class="bi bi-box-seam text-muted"
+                        style="font-size:70px;"
+                    ></i>
+
+
+                    <h4 class="fw-bold mt-3">
+
+                        No Products Found
+
+                    </h4>
+
+
+                    <p class="text-muted">
+
+                        There are no available products in this category.
+
+                    </p>
+
+
+                    <a
+                        href="{% url 'product_list' %}"
+                        class="btn btn-primary"
+                    >
+
+                        View All Products
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

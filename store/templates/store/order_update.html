@@ -1,0 +1,220 @@
+{% extends "store/dashboard_base.html" %}
+
+
+{% block title %}
+    Update Order #{{ order.id }}
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <!-- =================================================
+                 HEADER
+            ================================================== -->
+
+            <div class="mb-4">
+
+                <a
+                    href="{% url 'order_detail' order.id %}"
+                    class="text-decoration-none"
+                >
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Back to Order
+
+                </a>
+
+
+                <h1 class="fw-bold mt-3 mb-1">
+
+                    Update Order #{{ order.id }}
+
+                </h1>
+
+
+                <p class="text-muted">
+
+                    Change payment and order status.
+
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 CURRENT ORDER
+            ================================================== -->
+
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <small class="text-muted d-block">
+                                Customer
+                            </small>
+
+                            <strong>
+                                {{ order.full_name }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="text-end">
+
+                            <small class="text-muted d-block">
+                                Total
+                            </small>
+
+                            <strong class="fs-5">
+                                ${{ order.total_amount }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 UPDATE FORM
+            ================================================== -->
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+
+                        <!-- PAYMENT STATUS -->
+
+                        <div class="mb-4">
+
+                            <label
+                                for="{{ form.payment_status.id_for_label }}"
+                                class="form-label fw-semibold"
+                            >
+
+                                Payment Status
+
+                            </label>
+
+
+                            {{ form.payment_status }}
+
+
+                            {% if form.payment_status.errors %}
+
+                                <div class="text-danger small mt-2">
+
+                                    {{ form.payment_status.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <div class="form-text">
+
+                                Select whether the customer's payment
+                                is pending, paid or failed.
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ORDER STATUS -->
+
+                        <div class="mb-4">
+
+                            <label
+                                for="{{ form.order_status.id_for_label }}"
+                                class="form-label fw-semibold"
+                            >
+
+                                Order Status
+
+                            </label>
+
+
+                            {{ form.order_status }}
+
+
+                            {% if form.order_status.errors %}
+
+                                <div class="text-danger small mt-2">
+
+                                    {{ form.order_status.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <div class="form-text">
+
+                                Track the order from pending to
+                                delivery or cancellation.
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="d-flex gap-2">
+
+                            <a
+                                href="{% url 'order_detail' order.id %}"
+                                class="btn btn-light flex-fill"
+                            >
+
+                                Cancel
+
+                            </a>
+
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary flex-fill"
+                            >
+
+                                <i class="bi bi-check-circle me-1"></i>
+
+                                Save Changes
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

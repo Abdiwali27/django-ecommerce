@@ -1,0 +1,354 @@
+{% extends "store/dashboard_base.html" %}
+
+{% block title %}
+Store Settings - My Store
+{% endblock %}
+
+
+{% block dashboard_content %}
+
+<div class="container-fluid" style="margin-top: 75px;">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+
+                <i class="bi bi-gear me-2"></i>
+
+                Store Settings
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Manage your store information and shopping settings.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         SETTINGS CARD
+    ====================================================== -->
+
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-body p-4 p-lg-5">
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- =================================================
+                     STORE INFORMATION
+                ================================================== -->
+
+                <h5 class="fw-bold mb-4">
+
+                    <i class="bi bi-shop me-2 text-primary"></i>
+
+                    Store Information
+
+                </h5>
+
+
+                <div class="row g-4">
+
+
+                    <!-- STORE NAME -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+
+                            Store Name
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="store_name"
+                            class="form-control form-control-lg"
+                            value="{{ settings.store_name }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+
+                            Store Email
+
+                        </label>
+
+                        <input
+                            type="email"
+                            name="store_email"
+                            class="form-control form-control-lg"
+                            value="{{ settings.store_email }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+
+                            Phone
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            class="form-control form-control-lg"
+                            value="{{ settings.phone }}"
+                        >
+
+                    </div>
+
+
+                    <!-- ADDRESS -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+
+                            Address
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="address"
+                            class="form-control form-control-lg"
+                            value="{{ settings.address }}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <hr class="my-5">
+
+
+
+                <!-- =================================================
+                     BUSINESS HOURS
+                ================================================== -->
+
+                <h5 class="fw-bold mb-4">
+
+                    <i class="bi bi-clock me-2 text-primary"></i>
+
+                    Business Hours
+
+                </h5>
+
+
+                <div class="row g-4">
+
+
+                    <!-- OPENING -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+
+                            Opening Time
+
+                        </label>
+
+                        <input
+                            type="time"
+                            name="opening_time"
+                            class="form-control form-control-lg"
+                            value="{{ settings.opening_time|time:'H:i' }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CLOSING -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+
+                            Closing Time
+
+                        </label>
+
+                        <input
+                            type="time"
+                            name="closing_time"
+                            class="form-control form-control-lg"
+                            value="{{ settings.closing_time|time:'H:i' }}"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <hr class="my-5">
+
+
+
+                <!-- =================================================
+                     SHOPPING SETTINGS
+                ================================================== -->
+
+                <h5 class="fw-bold mb-4">
+
+                    <i class="bi bi-cart me-2 text-primary"></i>
+
+                    Shopping Settings
+
+                </h5>
+
+
+                <div class="row g-4">
+
+
+                    <!-- CURRENCY -->
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+
+                            Currency
+
+                        </label>
+
+                        <select
+                            name="currency"
+                            class="form-select form-select-lg"
+                        >
+
+                            <option
+                                value="USD"
+                                {% if settings.currency == "USD" %}
+                                    selected
+                                {% endif %}
+                            >
+                                USD
+                            </option>
+
+                            <option
+                                value="SOS"
+                                {% if settings.currency == "SOS" %}
+                                    selected
+                                {% endif %}
+                            >
+                                SOS
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- SHIPPING FEE -->
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+
+                            Shipping Fee
+
+                        </label>
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            name="shipping_fee"
+                            class="form-control form-control-lg"
+                            value="{{ settings.shipping_fee }}"
+                        >
+
+                    </div>
+
+
+                    <!-- FREE SHIPPING -->
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+
+                            Free Shipping Minimum
+
+                        </label>
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            name="free_shipping_minimum"
+                            class="form-control form-control-lg"
+                            value="{{ settings.free_shipping_minimum }}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SAVE
+                ================================================== -->
+
+                <div class="d-flex justify-content-end mt-5">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-lg px-5"
+                    >
+
+                        <i class="bi bi-check-circle me-2"></i>
+
+                        Save Settings
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
