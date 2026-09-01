@@ -15,7 +15,7 @@ echo "======================================"
 python manage.py migrate --noinput
 
 echo "======================================"
-echo "Creating admin user..."
+echo "Creating/updating admin user..."
 echo "======================================"
 
 python manage.py create_admin
