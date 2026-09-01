@@ -15,6 +15,12 @@ echo "======================================"
 python manage.py migrate --noinput
 
 echo "======================================"
+echo "Creating admin user..."
+echo "======================================"
+
+python manage.py create_admin
+
+echo "======================================"
 echo "Collecting static files..."
 echo "======================================"
 
