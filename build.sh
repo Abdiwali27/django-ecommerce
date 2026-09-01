@@ -6,7 +6,7 @@ echo "======================================"
 echo "Installing dependencies..."
 echo "======================================"
 
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
 
 echo "======================================"
 echo "Running migrations..."
